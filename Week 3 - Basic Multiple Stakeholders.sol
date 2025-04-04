@@ -10,6 +10,7 @@ contract QualityContract {
         _;
     }
 
+    // Input has to be list, comma seperated and string formatted addreses ["addr", "addr"]
     constructor(address[] memory initialStakeholders) {
         for (uint256 i = 0; i < initialStakeholders.length; i++) {
             stakeholders[initialStakeholders[i]] = true;
@@ -17,10 +18,12 @@ contract QualityContract {
         qualityScore = 0;
     }
 
+    // Only stake holders can execute this, this does not include the owner
     function updateQualityScore(uint256 newScore) external onlyStakeholder {
         qualityScore = newScore;
     }
 
+    // Only stake holders can execute this, this does not include the owner.
     function addStakeholder(address newStakeholder) external onlyStakeholder {
         stakeholders[newStakeholder] = true;
     }

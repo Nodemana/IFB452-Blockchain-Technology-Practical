@@ -20,6 +20,7 @@ contract Payable {
     function notPayable() public {}
 
     // Function to withdraw all Ether from this contract.
+    // Anyone can call this and it sends the ether to the big boss man (owner)
     function withdraw() public {
         // get the amount of Ether stored in this contract
         uint amount = address(this).balance;

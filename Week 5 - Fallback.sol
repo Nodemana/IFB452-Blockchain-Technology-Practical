@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+// Catch all function for calls to non-existent function signatures.
+// Triggered if Ether is sent WITH DATA or when no matching function exists in the contract.
+
 contract Fallback {
     event Log(string func, uint gas);
 
+    // You can actually pass data to the fallback function
     // Fallback function must be declared as external.
     fallback() external payable {
         // send / transfer (forwards 2300 gas to this fallback function)

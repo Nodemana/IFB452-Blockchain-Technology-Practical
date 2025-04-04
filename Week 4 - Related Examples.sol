@@ -12,6 +12,10 @@ contract Ballot {
         uint vote;   // index of the voted proposal
     }
 
+// ============================
+// Change bytes32 referneces to string datatype otherwise you gotta use hex.
+// ============================
+
     // This is a type for a single proposal.
     struct Proposal {
         bytes32 name;   // short name (up to 32 bytes)
@@ -47,7 +51,7 @@ contract Ballot {
     }
 
     // Give `voter` the right to vote on this ballot.
-    // May only be called by `chairperson`.
+    // May only be called by `chairperson` aka owner.
     function giveRightToVote(address voter) external {
         // If the first argument of `require` evaluates
         // to `false`, execution terminates and all
@@ -149,7 +153,7 @@ contract Ballot {
     // of the winner contained in the proposals array and then
     // returns the name of the winner
     function winnerName() external view
-            returns (bytes32 winnerName_)
+            returns (bytes32 winnerName_) //If you covert this to string you need to add memory keyword
     {
         winnerName_ = proposals[winningProposal()].name;
     }

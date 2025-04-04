@@ -4,18 +4,18 @@ pragma solidity ^0.8.0;
 contract QualityContract {
     // The contract owner's address
     address public owner;
-    
+
     // Struct to define the structure of a quality contract
     struct QualityContractData {
         string contractName;       // Name of the quality contract
         address[] stakeholders;    // Array to store stakeholders' addresses
         string qualityCriteria;    // Criteria for quality
         bool isCompleted;          // Flag to indicate if the quality contract is completed
-    }  
+    }
 
     // Mapping to store quality contract information based on contract ID
     mapping (uint256 => QualityContractData) public qualityContracts;
-    
+
     // Counter to keep track of the total number of quality contracts
     uint256 public contractCount;
 
@@ -38,19 +38,20 @@ contract QualityContract {
     function createQualityContract(string memory _contractName, address[] memory _stakeholders, string memory _qualityCriteria) public onlyOwner {
         // Increment contractCount to generate a unique contract ID
         contractCount++;
-        
+
         // Create a new quality contract and store it in the qualityContracts mapping
         qualityContracts[contractCount] = QualityContractData(_contractName, _stakeholders, _qualityCriteria, false);
-        
+
         // Emit an event to signify the creation of a new quality contract
         emit QualityContractCreated(contractCount, _contractName, _stakeholders, _qualityCriteria);
     }
 
+    // Only owner
     // Function to mark a quality contract as completed
     function completeQualityContract(uint256 _contractId) public onlyOwner {
         // Check if the provided contract ID is valid
         require(_contractId > 0 && _contractId <= contractCount, "Invalid contract ID");
-        
+
         // Mark the quality contract as completed
         qualityContracts[_contractId].isCompleted = true;
     }
@@ -59,12 +60,13 @@ contract QualityContract {
     function getQualityContractDetails(uint256 _contractId) public view returns (string memory, address[] memory, string memory, bool) {
         // Check if the provided contract ID is valid
         require(_contractId > 0 && _contractId <= contractCount, "Invalid contract ID");
-        
+
         // Retrieve and return the details of the specified quality contract
         QualityContractData storage contractData = qualityContracts[_contractId];
         return (contractData.contractName, contractData.stakeholders, contractData.qualityCriteria, contractData.isCompleted);
     }
 
+    //Have to be stakeholder
     // Function for stakeholders to perform quality check
     function performQualityCheck(uint256 _contractId) public {
         // Check if the provided contract ID is valid
@@ -83,5 +85,5 @@ contract QualityContract {
         // Perform quality check logic (replace with actual quality check logic)
         // For demonstration purposes, we just set the contract as completed
         qualityContracts[_contractId].isCompleted = true;
-    }    
+    }
 }
